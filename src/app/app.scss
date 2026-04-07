@@ -1,20 +1,43 @@
-/* 1. Le conteneur principal qui contient les deux sections */
 .container {
-  display: flex;         /* Active le mode côte à côte */
-  gap: 40px;            /* Espace de 40px entre les deux colonnes */
-  padding: 20px;
-  max-width: 1000px;
-  margin: 0 auto;       /* Centre tout le bloc sur la page */
+  display: flex;
+  margin: 50px auto;
+  transition: all 0.5s ease-in-out;
+  
+  /* État 1 : Seul le formulaire est là */
+  width: fit-content; /* Le conteneur s'adapte à la taille du formulaire seul */
+  max-width: 500px;
+  justify-content: center;
+
+  /* État 2 : Le formulaire glisse à gauche, le résultat apparaît à droite */
+  &.est-valide {
+    max-width: 1000px; 
+    gap: 30px; /* Espace entre les deux uniquement après validation */
+  }
 }
 
-/* 2. Style commun pour la partie formulaire et la partie résultat */
-.form-section, .result-section {
-  flex: 1;              /* Donne la même largeur aux deux colonnes (50/50) */
+.form-section {
+  width: 450px;
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background: #fff;
 }
+
+.result-section {
+  width: 450px; /* Même largeur pour un équilibre parfait */
+  padding: 20px;
+  border: 1px solid #28a745; /* Bordure verte pour différencier */
+  border-radius: 8px;
+  background: #f4fff4;
+  animation: apparition 0.6s ease-out;
+}
+
+@keyframes apparition {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+
 
 /* 3. Mise en forme des champs du formulaire */
 .field {
@@ -62,4 +85,20 @@ section {
         opacity: 0.5;
         pointer-events: none; /* Empêche toute interaction avec les éléments désactivés */
     }   
+}
+
+.btn-modifier {
+  margin-top: 20px;
+  background-color: #6c757d; // Gris au lieu de bleu
+  
+  &:hover {
+    background-color: #5a6268;
+  }
+}
+
+// Le style pour le bouton désactivé
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
 }

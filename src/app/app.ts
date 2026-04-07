@@ -31,5 +31,9 @@ export class App {
   // 5. La méthode appelée quand on clique sur le bouton
   valider() {
     this.estValide = true; // pour afficher les données après validation
+  };
+
+  modifier() {
+    this.estValide = false; // pour revenir au formulaire après modification
   }
 }

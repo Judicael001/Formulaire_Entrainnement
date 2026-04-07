@@ -1,9 +1,10 @@
-<main class="container">
+<!-- On ajoute la classe "est-valide" uniquement quand estValide est vrai -->
+<main class="container" [class.est-valide]="estValide">
   <!-- Colonne de gauche : Le Formulaire -->
   <section class="form-section">
     <h2>Nouveau Profil</h2>
     
-    <form (ngSubmit)="valider()">
+    <form #monForm="ngForm" (ngSubmit)="valider()">
       <div class="field">
         <label>Nom :</label>
         <input type="text" [(ngModel)]="utilisateur.nom" name="nom" required>
@@ -24,31 +25,30 @@
 
       <div class="field">
         <label>Fonction :</label>
-        <select [(ngModel)]="utilisateur.fonction" name="fonction">
+        <select [(ngModel)]="utilisateur.fonction" name="fonction" required>
           @for (metier of fonctions; track metier) {
             <option [value]="metier">{{ metier }}</option>
           }
         </select>
       </div>
 
-      <button type="submit">Afficher les données</button>
+      <button type="submit" [disabled]="monForm.invalid">Valider et Afficher</button>
     </form>
   </section>
 
-  <!-- Colonne de droite : L'affichage des données -->
-  <section class="result-section">
-    <h2>Données saisies</h2>
-    
-    @if (estValide) {
-      <div class="card">
-        <p><strong>Nom :</strong> {{ utilisateur.nom }}</p>
-        <p><strong>Prénom :</strong> {{ utilisateur.prenom }}</p>
-        <p><strong>Sexe :</strong> {{ utilisateur.sexe }}</p>
-        <p><strong>Fonction :</strong> {{ utilisateur.fonction }}</p>
-      </div>
-    } @else {
-      <p class="placeholder">Veuillez remplir et valider le formulaire pour voir le résultat.</p>
-    }
-  </section>
+  <!-- Partie Droite : N'existe QUE si on valide -->
+  @if (estValide) {
+    <section class="result-section">
+      <h2>Données saisies</h2>
+      
+        <div class="card">
+          <p><strong>Nom :</strong> {{ utilisateur.nom }}</p>
+          <p><strong>Prénom :</strong> {{ utilisateur.prenom }}</p>
+          <p><strong>Sexe :</strong> {{ utilisateur.sexe }}</p>
+          <p><strong>Fonction :</strong> {{ utilisateur.fonction }}</p>
+          <button (click)="modifier()" class="btn-modifier">Modifier les infos</button>
+        </div>
+    </section>
+  }
 
 </main>
